@@ -80,6 +80,8 @@ test:
 #
 production:
   <<: *default
-  database: school_management_production
-  username: school_management
-  password: <%= ENV['SCHOOL_MANAGEMENT_DATABASE_PASSWORD'] %>
+  host: <%= ENV["PG_HEROKU_HOST"]%>
+  port: <%= ENV["PG_HEROKU_PORT"]%>
+  database: <%= ENV["PG_HEROKU_DATABASE"]%>
+  username: <%= ENV["PG_HEROKU_USER"]%>
+  password: <%= ENV['PG_HEROKU_PASSWORD'] %>
