@@ -1,5 +1,6 @@
 ActiveAdmin.register User do
-  permit_params :registration, :name, :kind, :job_role, :email, :password, :password_confirmation, :phone
+  permit_params :registration, :name, :kind, :job_role, :email, :password, :password_confirmation, :phone,
+                :addresses_attributes => [:id, :street, :number, :neighboard, :city, :state, :zip_code, :_destroy]
 
   index do
     selectable_column
@@ -24,29 +25,47 @@ ActiveAdmin.register User do
       row :kind
       row :job_role
       row :phone
+      row "Address" do |user|
+        user.addresses.each do |ad|
+          ad.to_s
+        end
+        end
+      end
     end
-  end
 
-  filter :email
-  filter :kind
-  filter :job_role
-  filter :email
-  filter :created_at
+    filter :name
+    filter :registration
+    filter :email
+    filter :kind, as: :select, collection: proc {User.kinds}
+    filter :job_role, as: :select, collection: proc {User.job_roles}
+    filter :email
+    filter :addresses
+    filter :created_at
 
-  form do |f|
-    f.inputs "User Details" do
-      f.input :registration
-      f.input :name
-      f.input :kind
-      f.input :job_role
-      f.input :email
-      f.input :password
-      f.input :password_confirmation
-      f.input :phone
+    form do |f|
+      f.inputs "User Details" do
+        f.input :registration
+        f.input :name
+        f.input :kind
+        f.input :job_role
+        f.input :email
+        f.input :password
+        f.input :password_confirmation
+        f.input :phone
+      end
+      f.inputs "Address Details" do
+        f.has_many :addresses, allow_destroy: true, new_record: true do |ad|
+          ad.input :street
+          ad.input :number
+          ad.input :neighboard
+          ad.input :city
+          ad.input :state
+          ad.input :zip_code
+        end
+      end
+      f.actions
     end
-    f.actions
+
+    scope :all
+
   end
-
-  scope :all
-
-end
