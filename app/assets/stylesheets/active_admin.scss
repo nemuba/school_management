@@ -1,3 +1,4 @@
+
 // SASS variable overrides must be declared before loading up Active Admin's styles.
 //
 // To view the variables that Active Admin provides, take a look at
@@ -11,8 +12,37 @@ $primary-color: #0946ff;
 //@import "active_admin/mixins";
 //@import "active_admin/base";
 @import 'formadmin/formadmin';
-@import "active_admin/searchable_select";
+@import 'activeadmin_addons/all';
+
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
+
+// Vars Enum Kind
+$admin-color: #16ff00;
+$secretary-color: #fffb01;
+$teacher-color: #0003a5;
+$director-color: #a50203;
+$vice-director-color: #a54e0c;
+$coordinator-color: #a50096;
+
+// Vars Enum Job_role
+$peb1-color: #00abee;
+$peb2-color: #006dee;
+$pdi-color: #0ca577;
+$amanuensis-color: #fffb01;
+
+
+.status_tag {
+  &.admin { background: $admin-color; }
+  &.secretary { background: $secretary-color; }
+  &.teacher { background: $teacher-color;}
+  &.director { background: $director-color;}
+  &.vice-director { background: $vice-director-color;}
+  &.coordinator { background: $coordinator-color;}
+  &.peb1 { background: $peb1-color;}
+  &.peb2 { background: $peb2-color;}
+  &.pdi { background: $pdi-color;}
+  &.amanuensis { background: $amanuensis-color;}
+}
