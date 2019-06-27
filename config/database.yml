@@ -85,3 +85,4 @@ production:
   database: <%= ENV["PG_HEROKU_DATABASE"]%>
   username: <%= ENV["PG_HEROKU_USER"]%>
   password: <%= ENV['PG_HEROKU_PASSWORD'] %>
+  url: <%= ENV['PG_HEROKU_URL'] %>
