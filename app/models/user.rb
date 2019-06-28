@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   enum status: [:active, :inactive]
   enum kind: [:admin, :director, :vice_director,:coordinator, :teacher, :secretary]
-  enum job_role: [:peb1, :peb2, :pdi, :paeb, :amanuensis, :asi]
+  enum job_role: [:admin_user,:peb1, :peb2, :pdi, :paeb, :amanuensis, :asi]
 
   has_many :addresses, as: :addressable
   accepts_nested_attributes_for :addresses
@@ -19,7 +19,7 @@ class User < ApplicationRecord
 
 
   def to_s
-    "#{name} #{(kind.nil?) ? kind : " - #{kind.upcase}"} #{(job_role.nil?) ? job_role : " - #{job_role.upcase}"}"
+    "#{self.name} #{(self.kind.nil?) ? self.kind : " - #{self.kind.upcase}"} #{(self.job_role.nil?) ? self.job_role : " - #{self.job_role.upcase}"}"
   end
 
   def admin?
