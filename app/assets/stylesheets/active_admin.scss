@@ -31,8 +31,13 @@ $coordinator-color: #a50096;
 $peb1-color: #00abee;
 $peb2-color: #006dee;
 $pdi-color: #0ca577;
+$asi-color: #00a4a5;
+$paeb-color: #54a500;
 $amanuensis-color: #fffb01;
 
+// Vars Enum Status
+$active-color: #16ff00;
+$inactive-color: #ff0500;
 
 .status_tag {
   &.admin { background: $admin-color; }
@@ -41,8 +46,12 @@ $amanuensis-color: #fffb01;
   &.director { background: $director-color;}
   &.vice-director { background: $vice-director-color;}
   &.coordinator { background: $coordinator-color;}
+  &.paeb { background: $paeb-color;}
   &.peb1 { background: $peb1-color;}
   &.peb2 { background: $peb2-color;}
   &.pdi { background: $pdi-color;}
+  &.asi { background: $asi-color;}
   &.amanuensis { background: $amanuensis-color;}
+  &.active { background: $active-color;}
+  &.inactive { background: $inactive-color;}
 }
