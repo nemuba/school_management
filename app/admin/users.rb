@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :registration, :name, :kind, :job_role, :status, :email, :password, :password_confirmation, :phone,
+  permit_params :registration, :name, :birthdate,:kind, :job_role, :status, :email, :password, :password_confirmation, :phone,
                 :addresses_attributes => [:id, :street, :number, :neighboard, :city, :state, :zip_code, :_destroy]
 
   index do
@@ -16,17 +16,22 @@ ActiveAdmin.register User do
     tag_column "Job Role" do |user|
       (user.job_role.nil?) ? user.job_role : user.job_role.upcase
     end
-    column :created_at
+    column "Birthdate" do |user|
+      user.birthdate.strftime("%d/%m/%Y")
+    end
     actions
   end
   show :title => proc {|user| user.to_s} do
     attributes_table do
       row :registration
       row :name
+      row "Birthdate" do |user|
+        user.birthdate.strftime("%d/%m/%Y")
+      end
       row :email
-      row :kind
-      row :job_role
-      row :status
+      tag_row :kind
+      tag_row :job_role
+      tag_row :status
       row :phone
       row "Address" do |user|
         user.addresses.each do |ad|
@@ -37,6 +42,7 @@ ActiveAdmin.register User do
   end
 
   filter :name
+  filter :birthdate
   filter :registration
   filter :email
   filter :kind, as: :select, collection: proc {User.kinds}
@@ -44,12 +50,13 @@ ActiveAdmin.register User do
   filter :status, as: :select, collection: proc {User.statuses}
   filter :email
   filter :addresses
-  filter :created_at
+
 
   form do |f|
     f.inputs "User Details" do
       f.input :registration
       f.input :name
+      f.input :birthdate, as: :datepicker
       f.input :kind
       f.input :job_role
       f.input :status
