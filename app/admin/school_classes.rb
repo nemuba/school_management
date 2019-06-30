@@ -42,4 +42,9 @@ ActiveAdmin.register SchoolClass do
   filter :series
   filter :year_school
 
+  scope :period_integral
+  scope :period_manha
+  scope :period_tarde
+  scope :period_parcial
+
 end
