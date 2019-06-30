@@ -1,5 +1,6 @@
 ActiveAdmin.register User do
-  permit_params :registration, :name, :birthdate,:kind, :job_role, :status, :email, :password, :password_confirmation, :phone,
+  menu label: proc {(current_user.admin?) ? "Users" : "Your Perfil"}, priority: 1
+  permit_params :registration, :name, :birthdate, :kind, :job_role, :status, :email, :password, :password_confirmation, :phone,
                 :addresses_attributes => [:id, :street, :number, :neighboard, :city, :state, :zip_code, :_destroy]
 
   index do
@@ -37,6 +38,14 @@ ActiveAdmin.register User do
         user.addresses.each do |ad|
           ad.to_s
         end
+      end
+    end
+  end
+
+  sidebar 'School Classes', if: proc {!user.admin?}, :only => :show do
+    table_for user.school_classes.where(year_school: Time.now) do
+      column do |school_class|
+        link_to school_class.to_s, [:admin, school_class]
       end
     end
   end
