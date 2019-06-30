@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_28_152436) do
+ActiveRecord::Schema.define(version: 2019_06_30_123112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,15 @@ ActiveRecord::Schema.define(version: 2019_06_28_152436) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
+  end
+
+  create_table "responsible_legals", force: :cascade do |t|
+    t.string "name"
+    t.string "phone"
+    t.bigint "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_responsible_legals_on_student_id"
   end
 
   create_table "students", force: :cascade do |t|
@@ -75,4 +84,5 @@ ActiveRecord::Schema.define(version: 2019_06_28_152436) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "responsible_legals", "students"
 end

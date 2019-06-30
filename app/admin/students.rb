@@ -1,6 +1,7 @@
 ActiveAdmin.register Student do
   permit_params :name, :ra, :rm, :birthdate, :number_registration, :mother, :father, :phone,
-                :addresses_attributes => [:id, :street, :number, :neighboard, :city, :state, :zip_code, :_destroy]
+                :addresses_attributes => [:id, :street, :number, :neighboard, :city, :state, :zip_code, :_destroy],
+                :responsible_legals_attributes  => [:id, :name, :phone, :_destroy]
   form do |f|
     f.inputs "Student Details" do
       f.input :name
@@ -22,13 +23,21 @@ ActiveAdmin.register Student do
         ad.input :zip_code
       end
     end
+    f.inputs "Responsible Legal details" do
+      f.has_many :responsible_legals , allow_destroy: true, new_record: true do |rl|
+        rl.input :name
+        rl.input :phone
+      end
+    end
     f.actions
   end
 
   index do
     selectable_column
     id_column
-    column :number_registration
+    column "Nº Registration", max_width: "20px", min_width: "10px" do |student|
+      span student.number_registration
+    end
     column :ra
     column :name
     column :birthdate
@@ -45,6 +54,11 @@ ActiveAdmin.register Student do
       row :number_registration
       row :ra
       row :rm
+      row "Responsible legals" do |student|
+        student.responsible_legals.each do |rl|
+          rl.name
+        end
+      end
       row "Addresses" do |student|
         student.addresses.each do |ad|
           ad.to_s
@@ -52,4 +66,11 @@ ActiveAdmin.register Student do
       end
     end
   end
+
+  filter :name
+  filter :father
+  filter :mother
+  filter :addresses
+  filter :responsible_legals
+
 end
