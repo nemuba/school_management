@@ -1,6 +1,16 @@
 ActiveAdmin.register SchoolClass do
   permit_params :period, :series, :year_school, :user_id
 
+  form do |f|
+    f.inputs "School Details" do
+      f.input :series
+      f.input :period
+      f.input :user, collection: User.where(kind: :teacher) {|u| [u.name, u.id]}
+      f.input :year_school, as: :datepicker
+    end
+    f.actions
+  end
+
   index do
       id_column
       column :series
@@ -27,7 +37,9 @@ ActiveAdmin.register SchoolClass do
   end
 
 
-  filter :user, collection: -> {User.where(kind: :teacher)}
-
+  filter :user, label: "Teacher", collection: -> {User.where(kind: :teacher)}
+  filter :period, as: :select, collection: proc {SchoolClass.periods}
+  filter :series
+  filter :year_school
 
 end

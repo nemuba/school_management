@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 2019_06_30_133542) do
   end
 
   create_table "school_classes", force: :cascade do |t|
-    t.string "period"
+    t.integer "period"
     t.string "series"
     t.date "year_school"
     t.bigint "user_id"
