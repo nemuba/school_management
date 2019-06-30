@@ -1,4 +1,7 @@
 class SchoolClass < ApplicationRecord
+  has_many :registrations, dependent: :destroy
+  has_many :students, through: :registrations, dependent: :destroy
+
   enum period:[:integral, :tarde, :manha, :parcial]
   belongs_to :user, optional: true
 

@@ -38,6 +38,7 @@ $admin_user-color: #16ff00;
 // Vars Enum Status
 $active-color: #16ff00;
 $inactive-color: #ff0500;
+$transferred-color: #ff1906;
 
 .status_tag {
   &.admin { background: $admin-color; }
@@ -55,4 +56,5 @@ $inactive-color: #ff0500;
   &.amanuensis { background: $amanuensis-color;}
   &.active { background: $active-color;}
   &.inactive { background: $inactive-color;}
+  &.transferred { background: $transferred-color;}
 }

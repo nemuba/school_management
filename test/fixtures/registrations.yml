@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  school_class: one
+  student: one
+  date_registration: 2019-06-30
+
+two:
+  school_class: two
+  student: two
+  date_registration: 2019-06-30
