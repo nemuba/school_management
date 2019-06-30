@@ -70,7 +70,7 @@ ActiveAdmin.register Student do
   filter :name
   filter :father
   filter :mother
-  filter :addresses
+  filter :addresses, collection: -> {Address.where(addressable_type: 'Student')}
   filter :responsible_legals
 
 end

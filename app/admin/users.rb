@@ -49,7 +49,7 @@ ActiveAdmin.register User do
   filter :job_role, as: :select, collection: proc {User.job_roles}
   filter :status, as: :select, collection: proc {User.statuses}
   filter :email
-  filter :addresses
+  filter :addresses, collection: -> {Address.where(addressable_type: 'User')}
 
 
   form do |f|
