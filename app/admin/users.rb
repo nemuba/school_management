@@ -87,13 +87,13 @@ ActiveAdmin.register User do
     f.actions
   end
 
-  scope :all
-  scope :teachers
-  scope :pebs_1
-  scope :pebs_2
-  scope :pdis
-  scope :paebs
-  scope :asis
+  scope :all, default: true
+  scope :teachers, if:-> {current_user.admin?}
+  scope :pebs_1, if:-> {current_user.admin?}
+  scope :pebs_2, if:-> {current_user.admin?}
+  scope :pdis, if:-> {current_user.admin?}
+  scope :paebs, if:-> {current_user.admin?}
+  scope :asis, if:-> {current_user.admin?}
 
 
 end

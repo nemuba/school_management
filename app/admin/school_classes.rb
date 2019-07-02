@@ -70,9 +70,10 @@ ActiveAdmin.register SchoolClass do
   filter :series
   filter :year_school
 
-  scope :period_integral
-  scope :period_manha
-  scope :period_tarde
-  scope :period_parcial
+  scope :all, default: true
+  scope :period_integral, if:-> {current_user.admin?}
+  scope :period_manha, if:-> {current_user.admin?}
+  scope :period_tarde, if:-> {current_user.admin?}
+  scope :period_parcial, if:-> {current_user.admin?}
 
 end
