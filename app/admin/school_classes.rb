@@ -1,4 +1,5 @@
 ActiveAdmin.register SchoolClass do
+  menu label: proc {(current_user.teacher?) ? "My Class" : "School Classes"}, priority: 2
   permit_params :period, :series, :year_school, :user_id
 
   form do |f|

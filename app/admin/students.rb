@@ -1,4 +1,5 @@
 ActiveAdmin.register Student do
+  menu label: proc {(current_user.teacher?) ? "My Students" : "Students"}, priority: 3
   permit_params :name, :ra, :rm, :birthdate, :number_registration, :mother, :father, :phone,
                 :addresses_attributes => [:id, :street, :number, :neighboard, :city, :state, :zip_code, :_destroy],
                 :responsible_legals_attributes  => [:id, :name, :phone, :_destroy]
