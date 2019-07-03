@@ -42,10 +42,12 @@ ActiveAdmin.register User do
     end
   end
 
-  sidebar 'School Classes', if: proc {!user.admin?}, :only => :show do
-    table_for user.school_classes.where(year_school: Time.now) do
-      column do |school_class|
-        link_to school_class.to_s, [:admin, school_class]
+  if proc {current_user.teacher?}
+    sidebar 'School Classes', if: -> {current_user.teacher?}, :only => :show do
+      table_for current_user.school_classes do
+        column do |school_class|
+          link_to school_class.to_s, [:admin, school_class]
+        end
       end
     end
   end
@@ -88,12 +90,12 @@ ActiveAdmin.register User do
   end
 
   scope :all, default: true
-  scope :teachers, if:-> {current_user.admin?}
-  scope :pebs_1, if:-> {current_user.admin?}
-  scope :pebs_2, if:-> {current_user.admin?}
-  scope :pdis, if:-> {current_user.admin?}
-  scope :paebs, if:-> {current_user.admin?}
-  scope :asis, if:-> {current_user.admin?}
+  scope :teachers, if: -> {current_user.admin?}
+  scope :pebs_1, if: -> {current_user.admin?}
+  scope :pebs_2, if: -> {current_user.admin?}
+  scope :pdis, if: -> {current_user.admin?}
+  scope :paebs, if: -> {current_user.admin?}
+  scope :asis, if: -> {current_user.admin?}
 
 
 end
