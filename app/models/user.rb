@@ -18,6 +18,7 @@ class User < ApplicationRecord
   scope :paebs, -> {where job_role: :paeb}
   scope :asis, -> {where job_role: :asi}
 
+  validates :name, :kind, :job_role, :status, :registration, :birthdate, presence: true
 
   def to_s
     "#{self.name} #{(self.kind.nil?) ? self.kind : " - #{self.kind.upcase}"} #{(self.job_role.nil?) ? self.job_role : " - #{self.job_role.upcase}"}"

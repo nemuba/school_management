@@ -30,6 +30,7 @@ ActiveAdmin.register Student do
         rl.input :phone
       end
     end
+    f.semantic_errors
     f.actions
   end
 
