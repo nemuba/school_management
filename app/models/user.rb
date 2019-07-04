@@ -8,6 +8,8 @@ class User < ApplicationRecord
   enum job_role: [:admin_user,:peb1, :peb2, :pdi, :paeb, :amanuensis, :asi]
 
   has_many :school_classes
+  has_many :students, through: :school_classes
+  has_many :presences
   has_many :addresses, as: :addressable
   accepts_nested_attributes_for :addresses
 

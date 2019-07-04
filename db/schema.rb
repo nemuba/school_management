@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_30_201619) do
+ActiveRecord::Schema.define(version: 2019_07_03_214808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,19 @@ ActiveRecord::Schema.define(version: 2019_06_30_201619) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
+  end
+
+  create_table "presences", force: :cascade do |t|
+    t.integer "status", default: 0
+    t.date "date_presence"
+    t.bigint "student_id"
+    t.bigint "school_class_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_class_id"], name: "index_presences_on_school_class_id"
+    t.index ["student_id"], name: "index_presences_on_student_id"
+    t.index ["user_id"], name: "index_presences_on_user_id"
   end
 
   create_table "registrations", force: :cascade do |t|
@@ -105,6 +118,9 @@ ActiveRecord::Schema.define(version: 2019_06_30_201619) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "presences", "school_classes"
+  add_foreign_key "presences", "students"
+  add_foreign_key "presences", "users"
   add_foreign_key "registrations", "school_classes"
   add_foreign_key "registrations", "students"
   add_foreign_key "responsible_legals", "students"
