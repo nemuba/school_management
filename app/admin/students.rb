@@ -2,7 +2,7 @@ ActiveAdmin.register Student do
   menu label: proc {(current_user.teacher?) ? "My Students" : "Students"}, priority: 3
   permit_params :name, :ra, :rm, :birthdate, :number_registration, :mother, :father, :phone,
                 :addresses_attributes => [:id, :street, :number, :neighboard, :city, :state, :zip_code, :_destroy],
-                :responsible_legals_attributes  => [:id, :name, :phone, :_destroy]
+                :responsible_legals_attributes => [:id, :name, :phone, :_destroy]
   form do |f|
     f.inputs "Student Details" do
       f.input :name
@@ -25,7 +25,7 @@ ActiveAdmin.register Student do
       end
     end
     f.inputs "Responsible Legal details" do
-      f.has_many :responsible_legals , allow_destroy: true, new_record: true do |rl|
+      f.has_many :responsible_legals, allow_destroy: true, new_record: true do |rl|
         rl.input :name
         rl.input :phone
       end
@@ -66,6 +66,9 @@ ActiveAdmin.register Student do
           ad.to_s
         end
       end
+      row "Numbers of Lack" do |student|
+        student.presences.where(status: :lack).count
+      end
     end
   end
 
@@ -76,5 +79,42 @@ ActiveAdmin.register Student do
   filter :addresses, collection: -> {Address.where(addressable_type: 'Student')}
   filter :responsible_legals
 
+  # Ações em lote: Registrando presença para um ou uma seleção de alunos
+  batch_action :register_present do |selection|
+    #Student.find(selection).each {|s| s.presences.create! kind: :present, student_id: s.id}
+    Student.find(selection).each do |s|
+      if s.presences.any?
+        s.presences.each do |p|
+          if p.created_at.today?
+            p.update! status: :present
+          else
+            s.presences.create! status: :present, student_id: s.id, user_id: current_user.id, school_class_id: s.school_class_id, date_presence: Time.now
+          end
+        end
+      else
+        s.presences.create! status: :present, student_id: s.id, user_id: current_user.id, school_class_id: s.school_class_id, date_presence: Time.now
+      end
+    end
+    redirect_to admin_students_path, alert: "Presence registered successfully!"
+  end
+
+  # Ações em lote: Registrando falta para um ou uma seleção de alunos
+  batch_action :register_lack do |selection|
+    #Student.find(selection).each {|s| s.presences.create! kind: :present, student_id: s.id}
+    Student.find(selection).each do |s|
+      if s.presences.any?
+        s.presences.each do |p|
+          if p.created_at.today?
+            p.update! status: :lack
+          else
+            s.presences.create! status: :lack, student_id: s.id, user_id: current_user.id, school_class_id: s.school_class_id, date_presence: Time.now
+          end
+        end
+      else
+        s.presences.create! status: :lack, student_id: s.id, user_id: current_user.id, school_class_id: s.school_class_id, date_presence: Time.now
+      end
+    end
+    redirect_to admin_students_path, alert: "Presence registered successfully!"
+  end
 
 end
