@@ -9,28 +9,27 @@ ActiveAdmin.register Student do
       f.input :number_registration
       f.input :ra
       f.input :rm
-      f.input :birthdate
+      f.input :birthdate, mask: "####-##-##"
       f.input :mother
       f.input :father
-      f.input :phone
+      f.input :phone, mask: "+55-##-#####-####"
     end
     f.inputs "Address Details" do
       f.has_many :addresses, allow_destroy: true, new_record: true do |ad|
         ad.input :street
-        ad.input :number
+        ad.input :number, mask: "####"
         ad.input :neighboard
         ad.input :city
         ad.input :state
-        ad.input :zip_code
+        ad.input :zip_code, mask: "#####-###"
       end
     end
     f.inputs "Responsible Legal details" do
       f.has_many :responsible_legals, allow_destroy: true, new_record: true do |rl|
         rl.input :name
-        rl.input :phone
+        rl.input :phone, mask: "+55-##-#####-####"
       end
     end
-    f.semantic_errors
     f.actions
   end
 

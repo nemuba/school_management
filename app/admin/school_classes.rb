@@ -6,8 +6,8 @@ ActiveAdmin.register SchoolClass do
     f.inputs "School Details" do
       f.input :series
       f.input :period
-      f.input :user, collection: User.where(kind: :teacher) {|u| [u.name, u.id]}
-      f.input :year_school, as: :datepicker
+      f.input :user, collection: (current_user.teacher?) ? User.where(kind: :teacher).pluck(:name, :id) : User.where.not(kind: :admin).pluck(:name, :id)
+      f.input :year_school, mask: "####-##-##"
     end
     f.actions
   end

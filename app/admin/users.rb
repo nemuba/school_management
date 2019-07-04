@@ -67,23 +67,23 @@ ActiveAdmin.register User do
     f.inputs "User Details" do
       f.input :registration
       f.input :name
-      f.input :birthdate, as: :datepicker
+      f.input :birthdate, mask: "####-##-##"
       f.input :kind
       f.input :job_role
       f.input :status
       f.input :email
       f.input :password
       f.input :password_confirmation
-      f.input :phone
+      f.input :phone, mask: "+55-##-#####-####"
     end
     f.inputs "Address Details" do
       f.has_many :addresses, allow_destroy: true, new_record: true do |ad|
         ad.input :street
-        ad.input :number
+        ad.input :number, mask: "####"
         ad.input :neighboard
         ad.input :city
         ad.input :state
-        ad.input :zip_code
+        ad.input :zip_code, mask: "#####-###"
       end
     end
     f.actions

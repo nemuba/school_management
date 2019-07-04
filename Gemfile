@@ -8,7 +8,7 @@ gem 'activeadmin_addons'
 gem 'devise'
 gem 'cancancan'
 gem 'formadmin'
-
+gem 'active_admin-jquery_inputmask'
 gem 'dotenv-rails', group: [:development, :production, :test]
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
