@@ -30,8 +30,8 @@ ActiveAdmin.register SchoolClass do
   show do
     panel "Students of #{school_class.to_s}" do
       if school_class.students.any?
-        table_for school_class.students.order('name ASC') do
-          column "Number class" do |student|
+        table_for school_class.students.order('number_registration ASC') do
+          column "Number" do |student|
             student.number_registration
           end
           column "Name" do |student|
@@ -42,6 +42,15 @@ ActiveAdmin.register SchoolClass do
           end
           column "Birthdate" do |student|
             student.birthdate.strftime('%d/%m/%Y')
+          end
+          column "Phone" do |student|
+            student.phone
+          end
+          column "Lack" do |student|
+            student.presences.where(status: :lack).count
+          end
+          column "Present" do |student|
+            student.presences.where(status: :present).count
           end
         end
       else
