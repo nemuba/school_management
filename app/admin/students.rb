@@ -17,7 +17,7 @@ ActiveAdmin.register Student do
     f.inputs "Address Details" do
       f.has_many :addresses, allow_destroy: true, new_record: true do |ad|
         ad.input :street
-        ad.input :number, mask: "####"
+        ad.input :number, mask: "#####"
         ad.input :neighboard
         ad.input :city
         ad.input :state
