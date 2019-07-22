@@ -6,7 +6,7 @@ ActiveAdmin.register Activity do
     id_column
     column :fields_of_expertise
     column "Description" do |activity|
-      activity.description[0,25].html_safe << '....'
+      activity.description.truncate(25).html_safe
     end
     column "Date activity" do |activity|
       activity.date_activity.strftime('%d/%m/%Y')
@@ -19,7 +19,7 @@ ActiveAdmin.register Activity do
     attributes_table do
       row :fields_of_expertise
       row "description" do |activity|
-        activity.description[0,25].html_safe
+        activity.description.truncate(25).html_safe
       end
       row :date_activity
     end
@@ -30,17 +30,20 @@ ActiveAdmin.register Activity do
       f.input :school_class, as: :select, collection: current_user.school_classes.all.map {|s| [s.to_s, s.id]}
       f.input :fields_of_expertise
       f.input :description, as: :quill_editor
-      f.input :date_activity, mask: "####-##-##"
+      f.input :date_activity, as: :date_picker
       f.hidden_field :user_id, value: current_user.id
     end
     f.actions
   end
 
   controller do
-    def self.index
-      @activities = resource.where(user_id: current_user.id).page params[:page]
-      super
+    def new
+      @activity = Activity.new
     end
   end
+
+  filter :description
+  filter :fields_of_expertise, as: :select, collection: proc {Activity.fields_of_expertises}
+  filter :date_activity
 
 end

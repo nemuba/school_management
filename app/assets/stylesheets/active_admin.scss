@@ -13,7 +13,7 @@ $primary-color: #0946ff;
 //@import "active_admin/base";
 @import 'formadmin/formadmin';
 @import 'activeadmin_addons/all';
-
+@import 'activeadmin/quill_editor_input';
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //
