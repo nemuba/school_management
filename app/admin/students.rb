@@ -87,11 +87,11 @@ ActiveAdmin.register Student do
           if p.created_at.today?
             p.update! status: :present
           else
-            s.presences.create! status: :present, student_id: s.id, user_id: current_user.id, school_class_id: s.school_class_id, date_presence: Time.now
+            s.presences.create! status: :present, student_id: s.id, user_id: current_user.id, school_class_id: s.school_classes.last.id, date_presence: Time.now
           end
         end
       else
-        s.presences.create! status: :present, student_id: s.id, user_id: current_user.id, school_class_id: s.school_class_id, date_presence: Time.now
+        s.presences.create! status: :present, student_id: s.id, user_id: current_user.id, school_class_id: s.school_classes.last.id, date_presence: Time.now
       end
     end
     redirect_to admin_students_path, alert: "Presence registered successfully!"
@@ -106,11 +106,11 @@ ActiveAdmin.register Student do
           if p.created_at.today?
             p.update! status: :lack
           else
-            s.presences.create! status: :lack, student_id: s.id, user_id: current_user.id, school_class_id: s.school_class_id, date_presence: Time.now
+            s.presences.create! status: :lack, student_id: s.id, user_id: current_user.id, school_class_id: s.school_classes.last.id, date_presence: Time.now
           end
         end
       else
-        s.presences.create! status: :lack, student_id: s.id, user_id: current_user.id, school_class_id: s.school_class_id, date_presence: Time.now
+        s.presences.create! status: :lack, student_id: s.id, user_id: current_user.id, school_class_id: s.school_classes.last.id, date_presence: Time.now
       end
     end
     redirect_to admin_students_path, alert: "Presence registered successfully!"

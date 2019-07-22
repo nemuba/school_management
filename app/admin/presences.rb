@@ -12,4 +12,9 @@ ActiveAdmin.register Presence do
     f.actions
   end
 
+  controller do
+    def new
+      @presence = Presence.new
+    end
+  end
 end

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fields_of_expertise: 1
+  description: MyText
+  date_activity: 2019-07-04
+  user: one
+  school_class: one
+
+two:
+  fields_of_expertise: 1
+  description: MyText
+  date_activity: 2019-07-04
+  user: two
+  school_class: two
