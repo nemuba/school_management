@@ -4,6 +4,6 @@ class Activity < ApplicationRecord
   belongs_to :school_class
 
   def to_s
-    "#{self.fields_of_expertise.upcase} - #{self.description[0,25].html_safe}"
+    "#{self.fields_of_expertise.upcase} - #{self.description.truncate(25).html_safe}"
   end
 end

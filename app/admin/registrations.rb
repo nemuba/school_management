@@ -1,4 +1,5 @@
 ActiveAdmin.register Registration do
+  menu label: proc {(current_user.admin?) ? Registration.model_name.human(count: 2).titleize : i18n.t('menu.registration') }, priority: 5
   permit_params :student_id, :school_class_id, :status, :date_registration
 
   index do
@@ -7,8 +8,8 @@ ActiveAdmin.register Registration do
     column :student
     column :school_class
     tag_column :status
-    column "Date Registrations" do |registration|
-      registration.date_registration.strftime('%d/%m/%Y')
+    column :date_registration do |registration|
+      I18n.l registration.date_registration
     end
     actions
   end
@@ -17,18 +18,18 @@ ActiveAdmin.register Registration do
       row :student
       row :school_class
       tag_row :status
-      row "Date registration" do |registration|
-        registration.date_registration.strftime('%d/%m/%Y')
+      row :date_registration do |registration|
+        I18n.l  registration.date_registration
       end
     end
   end
 
   form do |f|
-    f.inputs "Registrations Details" do
+    f.inputs I18n.t('messages.registration.details', model: Registration.model_name.human.titleize) do
       f.input :student
       f.input :school_class
       f.input :status
-      f.input :date_registration
+      f.input :date_registration, as: :date_picker
     end
     f.actions
   end

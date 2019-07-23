@@ -1,0 +1,6 @@
+'pt-BR':
+  active_admin:
+      batch_actions:
+        labels:
+          register_present: Marcar presença
+          register_lack: Marcar falta

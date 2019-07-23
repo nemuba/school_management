@@ -1,5 +1,6 @@
 ActiveAdmin.register User do
-  menu label: proc {(current_user.admin?) ? "Users" : "Your Perfil"}, priority: 1
+  includes :addresses
+  menu label: proc {(current_user.admin?) ? User.model_name.human(count: 2).titleize : I18n.t('menu.user.teacher')}, priority: 1
   permit_params :registration, :name, :birthdate, :kind, :job_role, :status, :email, :password, :password_confirmation, :phone,
                 :addresses_attributes => [:id, :street, :number, :neighboard, :city, :state, :zip_code, :_destroy]
 
@@ -8,16 +9,16 @@ ActiveAdmin.register User do
     id_column
     column :name
     column :email
-    tag_column "Status" do |user|
+    tag_column :status do |user|
       user.status.upcase
     end
-    tag_column "Kind" do |user|
+    tag_column :kind do |user|
       (user.kind.nil?) ? user.kind : user.kind.upcase
     end
-    tag_column "Job Role" do |user|
+    tag_column :job_role do |user|
       (user.job_role.nil?) ? user.job_role : user.job_role.upcase
     end
-    column "Birthdate" do |user|
+    column :birthdate do |user|
       user.birthdate.strftime("%d/%m/%Y")
     end
     actions
@@ -26,7 +27,7 @@ ActiveAdmin.register User do
     attributes_table do
       row :registration
       row :name
-      row "Birthdate" do |user|
+      row :birthdate do |user|
         user.birthdate.strftime("%d/%m/%Y")
       end
       row :email
@@ -34,7 +35,7 @@ ActiveAdmin.register User do
       tag_row :job_role
       tag_row :status
       row :phone
-      row "Address" do |user|
+      row :addresses do |user|
         user.addresses.each do |ad|
           ad.to_s
         end
@@ -43,9 +44,9 @@ ActiveAdmin.register User do
   end
 
   if proc {current_user.teacher?}
-    sidebar 'School Classes', if: -> {current_user.teacher?}, :only => :show do
+    sidebar I18n.t('messages.user.teacher.school_class'), if: -> {current_user.teacher?}, :only => :show do
       table_for current_user.school_classes do
-        column do |school_class|
+        column "Turmas" do |school_class|
           link_to school_class.to_s, [:admin, school_class]
         end
       end
@@ -64,10 +65,10 @@ ActiveAdmin.register User do
 
 
   form do |f|
-    f.inputs "User Details" do
+    f.inputs I18n.t('messages.details', model: User.model_name.human.titleize) do
       f.input :registration
       f.input :name
-      f.input :birthdate, mask: "####-##-##"
+      f.input :birthdate, as: :date_picker
       f.input :kind
       f.input :job_role
       f.input :status
@@ -76,7 +77,7 @@ ActiveAdmin.register User do
       f.input :password_confirmation
       f.input :phone, mask: "+55-##-#####-####"
     end
-    f.inputs "Address Details" do
+    f.inputs I18n.t('messages.details', model: Address.model_name.human.titleize) do
       f.has_many :addresses, allow_destroy: true, new_record: true do |ad|
         ad.input :street
         ad.input :number, mask: "####"

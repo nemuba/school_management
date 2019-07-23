@@ -1,0 +1,23 @@
+'pt-BR':
+  messages:
+    details: Detalhes do %{model}
+    school_class:
+      info: Alunos da %{model}
+      details: Detalhes da %{model}
+      no_students: Não há alunos matriculados !
+    user:
+      teacher:
+        school_class: Minha(s) Turma(s)
+    registration:
+      details: Detalhes da %{model}
+  menu:
+    user:
+      teacher: Meu Perfil
+    school_class:
+      teacher: Minha Turma
+    student:
+      teacher: Meus alunos
+    presence:
+      teacher: Lista Chamada
+
+

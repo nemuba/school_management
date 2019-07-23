@@ -40,6 +40,10 @@ $active-color: #16ff00;
 $inactive-color: #ff0500;
 $transferred-color: #ff1906;
 
+//Vars Enum presence
+$present-color: #16ff00;
+$lack-color: #ff0500;
+
 .status_tag {
   &.admin { background: $admin-color; }
   &.admin_user { background: $admin_user-color; }
@@ -57,4 +61,6 @@ $transferred-color: #ff1906;
   &.active { background: $active-color;}
   &.inactive { background: $inactive-color;}
   &.transferred { background: $transferred-color;}
+  &.present { background: $present-color;}
+  &.lack { background: $lack-color;}
 }

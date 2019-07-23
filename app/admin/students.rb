@@ -1,10 +1,11 @@
 ActiveAdmin.register Student do
-  menu label: proc {(current_user.teacher?) ? "My Students" : "Students"}, priority: 3
+  includes :addresses, :responsible_legals, :presences
+  menu label: proc {(current_user.teacher?) ? I18n.t('menu.student.teacher') : Student.model_name.human(count: 2).titleize}, priority: 3
   permit_params :name, :ra, :rm, :birthdate, :number_registration, :mother, :father, :phone,
                 :addresses_attributes => [:id, :street, :number, :neighboard, :city, :state, :zip_code, :_destroy],
                 :responsible_legals_attributes => [:id, :name, :phone, :_destroy]
   form do |f|
-    f.inputs "Student Details" do
+    f.inputs I18n.t('messages.details', model: student.model_name.human.titleize) do
       f.input :name
       f.input :number_registration
       f.input :ra
@@ -14,7 +15,7 @@ ActiveAdmin.register Student do
       f.input :father
       f.input :phone, mask: "+55-##-#####-####"
     end
-    f.inputs "Address Details" do
+    f.inputs I18n.t('messages.details', model: Address.model_name.human.titleize) do
       f.has_many :addresses, allow_destroy: true, new_record: true do |ad|
         ad.input :street
         ad.input :number, mask: "#####"
@@ -24,7 +25,7 @@ ActiveAdmin.register Student do
         ad.input :zip_code, mask: "#####-###"
       end
     end
-    f.inputs "Responsible Legal details" do
+    f.inputs I18n.t('messages.details', model: ResponsibleLegal.model_name.human.titleize) do
       f.has_many :responsible_legals, allow_destroy: true, new_record: true do |rl|
         rl.input :name
         rl.input :phone, mask: "+55-##-#####-####"
@@ -36,7 +37,7 @@ ActiveAdmin.register Student do
   index do
     selectable_column
     id_column
-    column "Nº Registration", max_width: "20px", min_width: "10px" do |student|
+    column :number_registration, max_width: "20px", min_width: "10px" do |student|
       span student.number_registration
     end
     column :ra
@@ -55,17 +56,17 @@ ActiveAdmin.register Student do
       row :number_registration
       row :ra
       row :rm
-      row "Responsible legals" do |student|
+      row :responsible_legals do |student|
         student.responsible_legals.each do |rl|
           rl.name
         end
       end
-      row "Addresses" do |student|
+      row :addresses do |student|
         student.addresses.each do |ad|
           ad.to_s
         end
       end
-      row "Numbers of Lack" do |student|
+      row :lack do |student|
         student.presences.where(status: :lack).count
       end
     end
