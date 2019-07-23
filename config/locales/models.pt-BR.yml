@@ -124,3 +124,5 @@
         fields_of_expertise: Campo/Experiência
         description: Descrição
         date_activity: Data da Atividade
+        created_at: Criado em
+        updated_at: Atualizado em
