@@ -10,13 +10,13 @@ ActiveAdmin.register User do
     column :name
     column :email
     tag_column :status do |user|
-      user.status.upcase
+      user.humanized_status
     end
     tag_column :kind do |user|
-      (user.kind.nil?) ? user.kind : user.kind.upcase
+      user.humanized_kind
     end
     tag_column :job_role do |user|
-      (user.job_role.nil?) ? user.job_role : user.job_role.upcase
+      (user.job_role.nil?) ? user.humanized_job_role : user.humanized_job_role.upcase
     end
     column :birthdate do |user|
       I18n.l user.birthdate
@@ -32,9 +32,15 @@ ActiveAdmin.register User do
        I18n.l user.birthdate
       end
       row :email
-      tag_row :kind
-      tag_row :job_role
-      tag_row :status
+      tag_row :kind do |user|
+        user.humanized_kind
+      end
+      tag_row :job_role do |user|
+        user.humanized_job_role
+      end
+      tag_row :status do |user|
+        user.humanized_status
+      end
       row :phone
       row :addresses do |user|
         user.addresses.each do |ad|
@@ -58,9 +64,9 @@ ActiveAdmin.register User do
   filter :birthdate
   filter :registration
   filter :email
-  filter :kind, as: :select, collection: proc {User.kinds}
-  filter :job_role, as: :select, collection: proc {User.job_roles}
-  filter :status, as: :select, collection: proc {User.statuses}
+  filter :kind, as: :select, collection: -> {User.kinds}
+  filter :job_role, as: :select, collection: -> {User.job_roles}
+  filter :status, as: :select, collection: -> {User.statuses}
   filter :email
   filter :addresses, collection: -> {Address.where(addressable_type: 'User')}
 

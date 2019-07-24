@@ -7,7 +7,9 @@ ActiveAdmin.register Registration do
     id_column
     column :student
     column :school_class
-    tag_column :status
+    tag_column :status do |registration|
+      registration.humanized_status
+    end
     column :date_registration do |registration|
       I18n.l registration.date_registration
     end
@@ -17,7 +19,9 @@ ActiveAdmin.register Registration do
     attributes_table do
       row :student
       row :school_class
-      tag_row :status
+      tag_row :status do |registration|
+        registration.humanized_status
+      end
       row :date_registration do |registration|
         I18n.l  registration.date_registration
       end

@@ -17,7 +17,9 @@ ActiveAdmin.register SchoolClass do
   index do
       id_column
       column :series
-      column :period
+      column :period do |school_class|
+        school_class.humanized_period
+      end
       column :user do |school_class|
         school_class.user
       end
@@ -63,7 +65,9 @@ ActiveAdmin.register SchoolClass do
   sidebar I18n.t('messages.school_class.details', model: SchoolClass.model_name.human.titleize), :only=> :show do
     attributes_table do
       row :series
-      row :period
+      row :period do |school_class|
+        school_class.humanized_period
+      end
       row :user do |school_class|
         school_class.user
       end

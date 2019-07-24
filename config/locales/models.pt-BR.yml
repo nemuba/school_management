@@ -73,8 +73,26 @@
         registration: Registro
         birthdate: Data de aniversário
         kind: Tipo
+        kinds:
+          admin: Administrador
+          director: Diretor
+          vice_director: Vice Diretor
+          coordinator: Coordenador
+          teacher: Professor
+          secretary: Secretário
         status: Status
+        statuses:
+          active: Ativo
+          inactive: Inativo
         job_role: Cargo(Trabalho)
+        job_roles:
+          admin_user: Usuário Administrador
+          peb1: PEB I
+          peb2: PEB II
+          pdi: PDI
+          paeb: PAEB
+          amanuensis: Secretário
+          asi: ASI
         phone: Telefone
         addresses: Endereços
         school_classes: Turmas
@@ -91,6 +109,11 @@
       school_class:
         id: Id
         period: Periodo
+        periods:
+          manha: Manhã
+          tarde: Tarde
+          parcial: Parcial
+          integral: Integral
         series: Série
         user: Professor(a)
         students: Nº de alunos
@@ -131,6 +154,9 @@
       registration:
         id: Id
         status: Status
+        statuses:
+          active: Ativo
+          transferred: Transferido
         student: Aluno
         school_class: Turma
         date_registration: Data de registro

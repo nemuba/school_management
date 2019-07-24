@@ -45,22 +45,22 @@ $present-color: #16ff00;
 $lack-color: #ff0500;
 
 .status_tag {
-  &.admin { background: $admin-color; }
-  &.admin_user { background: $admin_user-color; }
-  &.secretary { background: $secretary-color; }
-  &.teacher { background: $teacher-color;}
-  &.director { background: $director-color;}
-  &.vice-director { background: $vice-director-color;}
-  &.coordinator { background: $coordinator-color;}
+  &.administrador { background: $admin-color; }
+  &.usuário_administrador { background: $admin_user-color; }
+  &.secretario { background: $secretary-color; }
+  &.professor { background: $teacher-color;}
+  &.diretor { background: $director-color;}
+  &.vice_diretor { background: $vice-director-color;}
+  &.coordenador { background: $coordinator-color;}
   &.paeb { background: $paeb-color;}
-  &.peb1 { background: $peb1-color;}
-  &.peb2 { background: $peb2-color;}
+  &.peb_i { background: $peb1-color;}
+  &.peb_ii { background: $peb2-color;}
   &.pdi { background: $pdi-color;}
   &.asi { background: $asi-color;}
-  &.amanuensis { background: $amanuensis-color;}
-  &.active { background: $active-color;}
-  &.inactive { background: $inactive-color;}
-  &.transferred { background: $transferred-color;}
+  &.secretário { background: $amanuensis-color;}
+  &.ativo { background: $active-color;}
+  &.inativo { background: $inactive-color;}
+  &.transferido { background: $transferred-color;}
   &.present { background: $present-color;}
   &.lack { background: $lack-color;}
 }

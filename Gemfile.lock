@@ -29,6 +29,10 @@ GEM
       formtastic-jquery_inputmask
       railties
     active_material (1.4.2)
+    active_record-humanized_enum (0.1.2)
+      activesupport
+      i18n
+      railties
     activeadmin (2.1.0)
       arbre (~> 1.2, >= 1.2.1)
       formtastic (~> 3.1)
@@ -302,6 +306,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_admin-jquery_inputmask
+  active_record-humanized_enum
   activeadmin
   activeadmin_addons
   activeadmin_quill_editor
