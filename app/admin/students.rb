@@ -1,36 +1,45 @@
 ActiveAdmin.register Student do
   includes :addresses, :responsible_legals, :presences
   menu label: proc {(current_user.teacher?) ? I18n.t('menu.student.teacher') : Student.model_name.human(count: 2).titleize}, priority: 3
+
   permit_params :name, :ra, :rm, :birthdate, :number_registration, :mother, :father, :phone,
                 :addresses_attributes => [:id, :street, :number, :neighboard, :city, :state, :zip_code, :_destroy],
                 :responsible_legals_attributes => [:id, :name, :phone, :_destroy]
   form do |f|
-    f.inputs I18n.t('messages.details', model: student.model_name.human.titleize) do
-      f.input :name
-      f.input :number_registration
-      f.input :ra
-      f.input :rm
-      f.input :birthdate, mask: "####-##-##"
-      f.input :mother
-      f.input :father
-      f.input :phone, mask: "+55-##-#####-####"
-    end
-    f.inputs I18n.t('messages.details', model: Address.model_name.human.titleize) do
-      f.has_many :addresses, allow_destroy: true, new_record: true do |ad|
-        ad.input :street
-        ad.input :number, mask: "#####"
-        ad.input :neighboard
-        ad.input :city
-        ad.input :state
-        ad.input :zip_code, mask: "#####-###"
-      end
-    end
-    f.inputs I18n.t('messages.details', model: ResponsibleLegal.model_name.human.titleize) do
-      f.has_many :responsible_legals, allow_destroy: true, new_record: true do |rl|
-        rl.input :name
-        rl.input :phone, mask: "+55-##-#####-####"
-      end
-    end
+    tabs do
+      tab I18n.t('messages.details', model: student.model_name.human.titleize) do
+        f.inputs do
+          f.input :name
+          f.input :number_registration
+          f.input :ra
+          f.input :rm
+          f.input :birthdate, mask: "####-##-##"
+          f.input :mother
+          f.input :father
+          f.input :phone, mask: "+55-##-#####-####"
+        end
+      end # tab student details
+      tab I18n.t('messages.details', model: Address.model_name.human.titleize) do
+        f.inputs do
+          f.has_many :addresses, allow_destroy: true, new_record: true do |ad|
+            ad.input :street
+            ad.input :number, mask: "#####"
+            ad.input :neighboard
+            ad.input :city
+            ad.input :state
+            ad.input :zip_code, mask: "#####-###"
+          end
+        end
+      end # tab addresses details
+      tab I18n.t('messages.details', model: ResponsibleLegal.model_name.human.titleize) do
+        f.inputs do
+          f.has_many :responsible_legals, allow_destroy: true, new_record: true do |rl|
+            rl.input :name
+            rl.input :phone, mask: "+55-##-#####-####"
+          end
+        end
+      end # tab responsibles legals details
+    end # end tabs
     f.actions
   end
 

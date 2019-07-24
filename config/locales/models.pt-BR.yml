@@ -1,5 +1,20 @@
 'pt-BR':
   activerecord:
+    scopes:
+      user:
+        all: Todos
+        teachers: Professor(as)
+        pebs_1: PEB I
+        pebs_2: PEB II
+        pdis: PDI's
+        paebs: PAEB's
+        asis:  ASI's
+      school_class:
+        all: Todos
+        period_integral: Periodo Integral
+        period_tarde: Periodo Tarde
+        period_manha: Periodo Manhã
+        period_parcial: Periodo Parcial
     models:
       user:
         one: Usuário

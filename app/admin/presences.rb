@@ -1,6 +1,7 @@
 ActiveAdmin.register Presence do
   includes :user, :student, :school_class
   menu label: proc{(current_user.admin?) ? Presence.model_name.human(count: 2).titleize : I18n.t('menu.presence.teacher') },priority: 4
+
   permit_params :status, :date_presence, :student_id, :school_class_id, :user_id
 
   form do |f|

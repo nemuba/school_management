@@ -1,6 +1,7 @@
 ActiveAdmin.register SchoolClass do
   includes :user, :students
   menu label: proc {(current_user.teacher?) ? I18n.t('menu.school_class.teacher') : SchoolClass.model_name.human(count: 2).titleize}, priority: 2
+
   permit_params :period, :series, :year_school, :user_id
 
   form do |f|
@@ -80,10 +81,10 @@ ActiveAdmin.register SchoolClass do
   filter :series
   filter :year_school
 
-  scope :all, default: true
-  scope :period_integral, if:-> {current_user.admin?}
-  scope :period_manha, if:-> {current_user.admin?}
-  scope :period_tarde, if:-> {current_user.admin?}
-  scope :period_parcial, if:-> {current_user.admin?}
+  scope proc { I18n .t('activerecord.scopes.school_class.all')},:all, default: true
+  scope proc { I18n .t('activerecord.scopes.school_class.period_integral')},:period_integral, if:-> {current_user.admin?}
+  scope proc { I18n .t('activerecord.scopes.school_class.period_manha')},:period_manha, if:-> {current_user.admin?}
+  scope proc { I18n .t('activerecord.scopes.school_class.period_tarde')},:period_tarde, if:-> {current_user.admin?}
+  scope proc { I18n .t('activerecord.scopes.school_class.period_parcial')},:period_parcial, if:-> {current_user.admin?}
 
 end

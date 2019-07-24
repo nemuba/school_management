@@ -19,16 +19,17 @@ ActiveAdmin.register User do
       (user.job_role.nil?) ? user.job_role : user.job_role.upcase
     end
     column :birthdate do |user|
-      user.birthdate.strftime("%d/%m/%Y")
+      I18n.l user.birthdate
     end
     actions
   end
+
   show :title => proc {|user| user.to_s} do
     attributes_table do
       row :registration
       row :name
       row :birthdate do |user|
-        user.birthdate.strftime("%d/%m/%Y")
+       I18n.l user.birthdate
       end
       row :email
       tag_row :kind
@@ -46,7 +47,7 @@ ActiveAdmin.register User do
   if proc {current_user.teacher?}
     sidebar I18n.t('messages.user.teacher.school_class'), if: -> {current_user.teacher?}, :only => :show do
       table_for current_user.school_classes do
-        column "Turmas" do |school_class|
+        column :school_classes do |school_class|
           link_to school_class.to_s, [:admin, school_class]
         end
       end
@@ -65,38 +66,44 @@ ActiveAdmin.register User do
 
 
   form do |f|
-    f.inputs I18n.t('messages.details', model: User.model_name.human.titleize) do
-      f.input :registration
-      f.input :name
-      f.input :birthdate, as: :date_picker
-      f.input :kind
-      f.input :job_role
-      f.input :status
-      f.input :email
-      f.input :password
-      f.input :password_confirmation
-      f.input :phone, mask: "+55-##-#####-####"
-    end
-    f.inputs I18n.t('messages.details', model: Address.model_name.human.titleize) do
-      f.has_many :addresses, allow_destroy: true, new_record: true do |ad|
-        ad.input :street
-        ad.input :number, mask: "####"
-        ad.input :neighboard
-        ad.input :city
-        ad.input :state
-        ad.input :zip_code, mask: "#####-###"
-      end
-    end
+    tabs do
+      tab I18n.t('messages.details', model: User.model_name.human.titleize) do
+        f.inputs  do
+          f.input :registration, input_html: {style: "float: left; width: 30%;"}
+          f.input :name
+          f.input :birthdate, as: :date_picker, input_html: {style: "float: left; width: 30%;"}
+          f.input :kind
+          f.input :job_role
+          f.input :status
+          f.input :email
+          f.input :password
+          f.input :password_confirmation
+          f.input :phone, mask: "+55-##-#####-####"
+        end
+      end # tab user details
+      tab I18n.t('messages.details', model: Address.model_name.human.titleize)  do
+        f.inputs do
+          f.has_many :addresses, allow_destroy: true, new_record: true do |ad|
+            ad.input :street
+            ad.input :number, mask: "####"
+            ad.input :neighboard
+            ad.input :city
+            ad.input :state
+            ad.input :zip_code, mask: "#####-###"
+          end
+        end
+       end # tab addresses details
+    end # tabs
     f.actions
   end
 
-  scope :all, default: true
-  scope :teachers, if: -> {current_user.admin?}
-  scope :pebs_1, if: -> {current_user.admin?}
-  scope :pebs_2, if: -> {current_user.admin?}
-  scope :pdis, if: -> {current_user.admin?}
-  scope :paebs, if: -> {current_user.admin?}
-  scope :asis, if: -> {current_user.admin?}
+  scope proc { I18n .t('activerecord.scopes.user.all')},:all, default: true
+  scope proc { I18n .t('activerecord.scopes.user.teachers')},:teachers, if: -> {current_user.admin?}
+  scope proc { I18n .t('activerecord.scopes.user.pebs_1')},:pebs_1, if: -> {current_user.admin?}
+  scope proc { I18n .t('activerecord.scopes.user.pebs_2')},:pebs_2, if: -> {current_user.admin?}
+  scope proc { I18n .t('activerecord.scopes.user.pdis')},:pdis, if: -> {current_user.admin?}
+  scope proc { I18n .t('activerecord.scopes.user.paebs')},:paebs, if: -> {current_user.admin?}
+  scope proc { I18n .t('activerecord.scopes.user.asis')},:asis, if: -> {current_user.admin?}
 
 
 end

@@ -1,5 +1,6 @@
 ActiveAdmin.register Observation do
   includes :user, :school_class
+
   permit_params :description, :date_observation, :user_id, :school_class_id
 
   form do |f|

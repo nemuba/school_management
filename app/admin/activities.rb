@@ -1,6 +1,7 @@
 ActiveAdmin.register Activity do
   includes :user, :school_class
   menu label: Activity.model_name.human(count: 2).titleize, priority: 5
+
   permit_params :fields_of_expertise, :description, :date_activity, :user_id, :school_class_id
 
   index do
