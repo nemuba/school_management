@@ -25,6 +25,9 @@
       activity:
         one: Atividade
         other: Atividades
+      observation:
+        one: Observação
+        other: Observações
     attributes:
       user:
         confirmation_sent_at: Confirmação enviada em
@@ -124,5 +127,13 @@
         fields_of_expertise: Campo/Experiência
         description: Descrição
         date_activity: Data da Atividade
+        created_at: Criado em
+        updated_at: Atualizado em
+      observation:
+        id: Id
+        description: Descrição
+        school_class: Turma
+        user: Professor
+        date_observation: Data de Observação
         created_at: Criado em
         updated_at: Atualizado em

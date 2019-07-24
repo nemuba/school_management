@@ -13,6 +13,7 @@ class Ability
       can :read, SchoolClass, user_id: user.id
       can :manage, Presence, user_id: user.id
       can :manage, Activity, user_id: user.id
+      can :manage, Observation, user_id: user.id
       can [:read], Student, school_classes: {user_id: user.id}
       can :read, ActiveAdmin::Page, name: "Dashboard", namespace_name: "admin"
     end

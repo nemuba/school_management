@@ -1,6 +1,7 @@
 'pt-BR':
   messages:
     details: Detalhes do %{model}
+    recents: "%{model} recentes"
     school_class:
       info: Alunos da %{model}
       details: Detalhes da %{model}
