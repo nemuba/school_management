@@ -4,7 +4,7 @@ ActiveAdmin.register User do
   permit_params :registration, :name, :birthdate, :kind, :job_role, :status, :email, :password, :password_confirmation, :phone,
                 :addresses_attributes => [:id, :street, :number, :neighboard, :city, :state, :zip_code, :_destroy]
 
-  index do
+  index :title => proc {User.model_name.human(count: 2).titleize} do
     selectable_column
     id_column
     column :name

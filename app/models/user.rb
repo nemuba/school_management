@@ -4,8 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :recoverable, :rememberable, :validatable
 
   enum status: [:active, :inactive]
-  enum kind: [:admin, :director, :vice_director,:coordinator, :teacher, :secretary]
-  enum job_role: [:admin_user,:peb1, :peb2, :pdi, :paeb, :amanuensis, :asi]
+  enum kind: [:admin, :director, :vice_director, :coordinator, :teacher, :secretary]
+  enum job_role: [:admin_user, :peb1, :peb2, :pdi, :paeb, :amanuensis, :asi]
 
   has_many :school_classes
   has_many :activities
@@ -25,7 +25,7 @@ class User < ApplicationRecord
   validates :name, :kind, :job_role, :status, :registration, :birthdate, presence: true
 
   def to_s
-    "#{self.name} #{(self.kind.nil?) ? self.kind : " - #{self.kind.upcase}"} #{(self.job_role.nil?) ? self.job_role : " - #{self.job_role.upcase}"}"
+    "#{self.humanized_kind} - #{self.humanized_job_role}"
   end
 
   def admin?
@@ -50,6 +50,14 @@ class User < ApplicationRecord
 
   def secretary?
     (self.kind == "secretary") ? true : false
+  end
+
+  def is_active?
+    (self.status == "active") ? true : false
+  end
+
+  def active_for_authentication?
+    super && is_active?
   end
 
 end
