@@ -1,5 +1,8 @@
 'pt-BR':
   messages:
+    destroy: "%{model} deletado(a) com sucesso !"
+    create: "%{model} criado(a) com sucesso !"
+    update: "%{model} atualizado(a) com sucesso !"
     details: Detalhes do %{model}
     recents: "%{model} recentes"
     school_class:

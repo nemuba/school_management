@@ -39,13 +39,51 @@ ActiveAdmin.register Observation do
   end
 
   controller do
+    before_action :set_observation, only: [:edit, :show, :destroy, :update]
+
     def new
       @observation = Observation.new
     end
+
+    def create
+      @observation = Observation.new(permitted_params[:observation])
+
+      if @observation.save
+        flash[:alert] = I18n.t('messages.create', model: @observation.model_name.human.titleize)
+        redirect_to :action => :index
+      else
+        render :action => :new
+      end
+    end
+
+    def destroy
+      if @observation.destroy
+        flash[:alert] = I18n.t('messages.destroy', model: @observation.model_name.human.titleize)
+        redirect_to :action => :index
+      else
+        render :action => :index
+      end
+    end
+
+    def update
+
+      if @observation.update_attributes(permitted_params[:observation])
+        flash[:alert] = I18n.t('messages.update', model: @observation.model_name.human.titleize)
+        redirect_to :action => :index
+      else
+        render :action => :edit
+      end
+    end
+
+    private
+
+    def set_observation
+      @observation = Observation.find(params[:id])
+    end
   end
 
-  action_item only: :show do
-    link_to 'voltar', admin_observations_path
+  action_item :return, only: [:show, :new, :edit] do
+    link_to "Voltar", admin_observations_path
   end
 
 end

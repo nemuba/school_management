@@ -46,15 +46,57 @@ ActiveAdmin.register Activity do
     f.actions
   end
 
-  controller do
-    def new
-      @activity = Activity.new
-    end
-  end
-
   filter :school_class
   filter :description
   filter :fields_of_expertise, as: :select, collection: proc {Activity.fields_of_expertises}
   filter :date_activity
+
+  controller do
+    before_action :set_activity, only: [:edit, :show, :destroy, :update]
+
+    def new
+      @activity = Activity.new
+    end
+
+    def create
+      @activity = Activity.new(permitted_params[:activity])
+
+      if @activity.save
+        flash[:alert] = I18n.t('messages.create', model: @activity.model_name.human.titleize)
+        redirect_to :action => :index
+      else
+        render :action => :new
+      end
+    end
+
+    def destroy
+      if @activity.destroy
+        flash[:alert] = I18n.t('messages.destroy', model: @activity.model_name.human.titleize)
+        redirect_to :action => :index
+      else
+        render :action => :index
+      end
+    end
+
+    def update
+
+      if @activity.update_attributes(permitted_params[:activity])
+        flash[:alert] = I18n.t('messages.update', model: @activity.model_name.human.titleize)
+        redirect_to :action => :index
+      else
+        render :action => :edit
+      end
+    end
+
+    private
+
+    def set_activity
+      @activity = Activity.find(params[:id])
+    end
+  end
+
+  action_item :return, only: [:show, :new, :edit] do
+    link_to "Voltar", admin_activities_path
+  end
 
 end

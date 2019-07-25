@@ -42,4 +42,48 @@ ActiveAdmin.register Registration do
   filter :school_class
   filter :status, as: :select, collection: -> {Registration.statuses}
   filter :date_registration
+
+   controller do
+    before_action :set_registration, only: [:edit, :show, :destroy, :update]
+
+    def create
+      @registration = Registration.new(permitted_params[:registration])
+
+      if @registration.save
+        flash[:alert] = I18n.t('messages.create', model: @registration.model_name.human.titleize)
+        redirect_to :action => :index
+      else
+        render :action => :new
+      end
+    end
+
+    def destroy
+      if @registration.destroy
+        flash[:alert] = I18n.t('messages.destroy', model: @registration.model_name.human.titleize)
+        redirect_to :action => :index
+      else
+        render :action => :index
+      end
+    end
+
+    def update
+
+      if @registration.update_attributes(permitted_params[:registration])
+        flash[:alert] = I18n.t('messages.update', model: @registration.model_name.human.titleize)
+        redirect_to :action => :index
+      else
+        render :action => :edit
+      end
+    end
+
+    private
+
+    def set_registration
+      @registration = Registration.find(params[:id])
+    end
+   end
+
+  action_item :return, only: [:show, :new, :edit] do
+    link_to "Voltar", admin_registrations_path
+  end
 end

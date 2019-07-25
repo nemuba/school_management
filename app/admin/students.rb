@@ -126,4 +126,48 @@ ActiveAdmin.register Student do
     redirect_to admin_students_path, alert: "Presence registered successfully!"
   end
 
+  controller do
+    before_action :set_student, only: [:edit, :show, :destroy, :update]
+
+    def create
+      @student = Student.new(permitted_params[:student])
+
+      if @student.save
+        flash[:alert] = I18n.t('messages.create', model: @student.model_name.human.titleize)
+        redirect_to :action => :index
+      else
+        render :action => :new
+      end
+    end
+
+    def destroy
+      if @student.destroy
+        flash[:alert] = I18n.t('messages.destroy', model: @student.model_name.human.titleize)
+        redirect_to :action => :index
+      else
+        render :action => :index
+      end
+    end
+
+    def update
+
+      if @student.update_attributes(permitted_params[:student])
+        flash[:alert] = I18n.t('messages.update', model: @student.model_name.human.titleize)
+        redirect_to :action => :index
+      else
+        render :action => :edit
+      end
+    end
+
+    private
+
+    def set_student
+      @student = Student.find(params[:id])
+    end
+  end
+
+  action_item :return, only: [:show, :new, :edit] do
+    link_to "Voltar", admin_students_path
+  end
+
 end

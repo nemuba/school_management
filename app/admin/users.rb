@@ -1,7 +1,7 @@
 ActiveAdmin.register User do
   includes :addresses
   menu label: proc {(current_user.admin?) ? User.model_name.human(count: 2).titleize : I18n.t('menu.user.teacher')}, priority: 1
-  permit_params :registration, :name, :birthdate, :kind, :job_role, :status, :email, :password, :password_confirmation, :phone,
+  permit_params :id, :registration, :name, :birthdate, :kind, :job_role, :status, :email, :password, :password_confirmation, :phone,
                 :addresses_attributes => [:id, :street, :number, :neighboard, :city, :state, :zip_code, :_destroy]
 
   index :title => proc {User.model_name.human(count: 2).titleize} do
@@ -29,7 +29,7 @@ ActiveAdmin.register User do
       row :registration
       row :name
       row :birthdate do |user|
-       I18n.l user.birthdate
+        I18n.l user.birthdate
       end
       row :email
       tag_row :kind do |user|
@@ -74,7 +74,7 @@ ActiveAdmin.register User do
   form do |f|
     tabs do
       tab I18n.t('messages.details', model: User.model_name.human.titleize) do
-        f.inputs  do
+        f.inputs do
           f.input :registration, input_html: {style: "float: left; width: 30%;"}
           f.input :name
           f.input :birthdate, as: :date_picker, input_html: {style: "float: left; width: 30%;"}
@@ -87,7 +87,7 @@ ActiveAdmin.register User do
           f.input :phone, mask: "+55-##-#####-####"
         end
       end # tab user details
-      tab I18n.t('messages.details', model: Address.model_name.human.titleize)  do
+      tab I18n.t('messages.details', model: Address.model_name.human.titleize) do
         f.inputs do
           f.has_many :addresses, allow_destroy: true, new_record: true do |ad|
             ad.input :street
@@ -98,18 +98,70 @@ ActiveAdmin.register User do
             ad.input :zip_code, mask: "#####-###"
           end
         end
-       end # tab addresses details
+      end # tab addresses details
     end # tabs
     f.actions
   end
 
-  scope proc { I18n .t('activerecord.scopes.user.all')},:all, default: true
-  scope proc { I18n .t('activerecord.scopes.user.teachers')},:teachers, if: -> {current_user.admin?}
-  scope proc { I18n .t('activerecord.scopes.user.pebs_1')},:pebs_1, if: -> {current_user.admin?}
-  scope proc { I18n .t('activerecord.scopes.user.pebs_2')},:pebs_2, if: -> {current_user.admin?}
-  scope proc { I18n .t('activerecord.scopes.user.pdis')},:pdis, if: -> {current_user.admin?}
-  scope proc { I18n .t('activerecord.scopes.user.paebs')},:paebs, if: -> {current_user.admin?}
-  scope proc { I18n .t('activerecord.scopes.user.asis')},:asis, if: -> {current_user.admin?}
+  scope proc {I18n.t('activerecord.scopes.user.all')}, :all, default: true
+  scope proc {I18n.t('activerecord.scopes.user.teachers')}, :teachers, if: -> {current_user.admin?}
+  scope proc {I18n.t('activerecord.scopes.user.pebs_1')}, :pebs_1, if: -> {current_user.admin?}
+  scope proc {I18n.t('activerecord.scopes.user.pebs_2')}, :pebs_2, if: -> {current_user.admin?}
+  scope proc {I18n.t('activerecord.scopes.user.pdis')}, :pdis, if: -> {current_user.admin?}
+  scope proc {I18n.t('activerecord.scopes.user.paebs')}, :paebs, if: -> {current_user.admin?}
+  scope proc {I18n.t('activerecord.scopes.user.asis')}, :asis, if: -> {current_user.admin?}
+
+  controller do
+    before_action :set_user, only: [:edit, :show, :destroy, :update]
+    before_action :verify_password, only: [:update]
+
+    def create
+      @user = User.new(permitted_params[:user])
+
+      if @user.save
+        flash[:alert] = I18n.t('messages.create', model: @user.model_name.human.titleize)
+        redirect_to :action => :index
+      else
+        render :action => :new
+      end
+    end
+
+    def destroy
+      if @user.destroy
+        flash[:alert] = I18n.t('messages.destroy', model: @user.model_name.human.titleize)
+        redirect_to :action => :index
+      else
+        render :action => :index
+      end
+    end
+
+    def update
+
+      if @user.update_attributes(permitted_params[:user])
+        flash[:alert] = I18n.t('messages.update', model: @user.model_name.human.titleize)
+        redirect_to :action => :index
+      else
+        render :action => :edit
+      end
+    end
+
+    private
+
+    def set_user
+      @user = User.find(params[:id])
+    end
+
+    def verify_password
+      # Permitindo so o parametro :email se o campo senha e confirmação estiverem em branco !
+      if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
+        params[:user].extract!(:password, :password_confirmation)
+      end
+    end
+  end
+
+  action_item :return, only: [:show, :new, :edit] do
+    link_to "Voltar", admin_users_path
+  end
 
 
 end

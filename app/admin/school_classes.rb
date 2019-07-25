@@ -15,21 +15,21 @@ ActiveAdmin.register SchoolClass do
   end
 
   index do
-      id_column
-      column :series
-      column :period do |school_class|
-        school_class.humanized_period
-      end
-      column :user do |school_class|
-        school_class.user
-      end
-      column :students do |school_class|
-        school_class.students.count
-      end
-      column :year_school do |school_class|
-        school_class.year_school.strftime('%Y')
-      end
-      actions
+    id_column
+    column :series
+    column :period do |school_class|
+      school_class.humanized_period
+    end
+    column :user do |school_class|
+      school_class.user
+    end
+    column :students do |school_class|
+      school_class.students.count
+    end
+    column :year_school do |school_class|
+      school_class.year_school.strftime('%Y')
+    end
+    actions
   end
   show do
     panel I18n.t('messages.school_class.info', model: school_class.to_s) do
@@ -62,7 +62,7 @@ ActiveAdmin.register SchoolClass do
       end
     end
   end
-  sidebar I18n.t('messages.school_class.details', model: SchoolClass.model_name.human.titleize), :only=> :show do
+  sidebar I18n.t('messages.school_class.details', model: SchoolClass.model_name.human.titleize), :only => :show do
     attributes_table do
       row :series
       row :period do |school_class|
@@ -85,10 +85,55 @@ ActiveAdmin.register SchoolClass do
   filter :series
   filter :year_school
 
-  scope proc { I18n .t('activerecord.scopes.school_class.all')},:all, default: true
-  scope proc { I18n .t('activerecord.scopes.school_class.period_integral')},:period_integral, if:-> {current_user.admin?}
-  scope proc { I18n .t('activerecord.scopes.school_class.period_manha')},:period_manha, if:-> {current_user.admin?}
-  scope proc { I18n .t('activerecord.scopes.school_class.period_tarde')},:period_tarde, if:-> {current_user.admin?}
-  scope proc { I18n .t('activerecord.scopes.school_class.period_parcial')},:period_parcial, if:-> {current_user.admin?}
+  scope proc {I18n.t('activerecord.scopes.school_class.all')}, :all, default: true
+  scope proc {I18n.t('activerecord.scopes.school_class.period_integral')}, :period_integral, if: -> {current_user.admin?}
+  scope proc {I18n.t('activerecord.scopes.school_class.period_manha')}, :period_manha, if: -> {current_user.admin?}
+  scope proc {I18n.t('activerecord.scopes.school_class.period_tarde')}, :period_tarde, if: -> {current_user.admin?}
+  scope proc {I18n.t('activerecord.scopes.school_class.period_parcial')}, :period_parcial, if: -> {current_user.admin?}
+
+
+  controller do
+    before_action :set_school_class, only: [:edit, :show, :destroy, :update]
+
+    def create
+      @school_class = SchoolClass.new(permitted_params[:school_class])
+
+      if @school_class.save
+        flash[:alert] = I18n.t('messages.create', model: @school_class.model_name.human.titleize)
+        redirect_to :action => :index
+      else
+        render :action => :new
+      end
+    end
+
+    def destroy
+      if @school_class.destroy
+        flash[:alert] = I18n.t('messages.destroy', model: @school_class.model_name.human.titleize)
+        redirect_to :action => :index
+      else
+        render :action => :index
+      end
+    end
+
+    def update
+
+      if @school_class.update_attributes(permitted_params[:school_class])
+        flash[:alert] = I18n.t('messages.update', model: @school_class.model_name.human.titleize)
+        redirect_to :action => :index
+      else
+        render :action => :edit
+      end
+    end
+
+    private
+
+    def set_school_class
+      @school_class = SchoolClass.find(params[:id])
+    end
+  end
+
+  action_item :return, only: [:show, :new, :edit] do
+    link_to "Voltar", admin_school_classes_path
+  end
 
 end
