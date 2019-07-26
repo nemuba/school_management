@@ -4,7 +4,7 @@ ActiveAdmin.register Activity do
 
   permit_params :fields_of_expertise, :description, :date_activity, :user_id, :school_class_id
 
-  index_as_calendar({:ajax => true, :includes => [:user, :school_class]}) do |item|
+  index_as_calendar({:ajax => true}) do |item|
     {
         id: item.id,
         title: "#{item.fields_of_expertise.upcase}",

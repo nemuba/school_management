@@ -3,6 +3,21 @@ ActiveAdmin.register Observation do
 
   permit_params :description, :date_observation, :user_id, :school_class_id
 
+  index_as_calendar({:ajax => true}) do |item|
+    {
+        id: item.id,
+        title: "Observação - #{ I18n.l(item.date_observation)}",
+        start: item.created_at,
+        url: "#{admin_observation_path(item)}",
+        tooltip: {
+            title: "#{ I18n.l(item.date_observation)}",
+            text: item.description.blank? ? nil : item.description.truncate(25).html_safe
+        },
+        color: 'green',
+        textColor: 'white'
+    }
+  end
+
   form do |f|
     f.inputs I18n.t('messages.details', model: Observation.model_name.human.titleize) do
       f.input :school_class, as: :select, collection: current_user.school_classes.all.map {|s| [s.to_s, s.id]}
