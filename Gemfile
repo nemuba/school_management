@@ -14,7 +14,7 @@ gem 'activeadmin_quill_editor'
 gem 'rails-i18n','~>5.1'
 gem 'active_record-humanized_enum'
 gem 'activeadmin-index_as_calendar', github: 'bys-control/activeadmin-index_as_calendar'
-gem 'webpacker', '~> 4.x'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
