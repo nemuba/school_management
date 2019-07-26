@@ -6,3 +6,9 @@
 //= require index_as_calendar/application
 //= require index_as_calendar/jquery.qtip.min
 //= require fullcalendar/dist/locale/pt-br
+
+document.addEventListener('DOMContentLoaded', () => {
+    const $c = document.getElementById("calendar").children;
+    $c[0].innerHTML = "Calendário";
+
+});
