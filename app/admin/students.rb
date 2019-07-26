@@ -13,7 +13,7 @@ ActiveAdmin.register Student do
           f.input :number_registration
           f.input :ra
           f.input :rm
-          f.input :birthdate, mask: "####-##-##"
+          f.input :birthdate,as: :date_picker, input_html: {style: "float: left; width: 30%;"}
           f.input :mother
           f.input :father
           f.input :phone, mask: "+55-##-#####-####"
