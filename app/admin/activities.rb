@@ -4,6 +4,21 @@ ActiveAdmin.register Activity do
 
   permit_params :fields_of_expertise, :description, :date_activity, :user_id, :school_class_id
 
+  index_as_calendar({:ajax => true, :includes => [:user, :school_class]}) do |item|
+    {
+        id: item.id,
+        title: "#{item.fields_of_expertise.upcase}",
+        start: item.date_activity,
+        url: "#{admin_activity_path(item)}",
+        tooltip: {
+            title: "#{ I18n.l(item.date_activity)}",
+            text: item.description.blank? ? nil : item.description.truncate(30).html_safe
+        },
+        color: 'green',
+        textColor: 'white'
+    }
+  end
+
   index do
     selectable_column
     id_column

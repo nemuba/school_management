@@ -3,3 +3,6 @@
 //= require active_admin/inputmask
 //= require activeadmin/quill_editor/quill
 //= require activeadmin/quill_editor_input
+//= require index_as_calendar/application
+//= require index_as_calendar/jquery.qtip.min
+//= require fullcalendar/dist/locale/pt-br

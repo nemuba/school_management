@@ -14,6 +14,7 @@ $primary-color: #0946ff;
 @import 'formadmin/formadmin';
 @import 'activeadmin_addons/all';
 @import 'activeadmin/quill_editor_input';
+@import "index_as_calendar";
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //
@@ -63,4 +64,14 @@ $lack-color: #ff0500;
   &.transferido { background: $transferred-color;}
   &.present { background: $present-color;}
   &.lack { background: $lack-color;}
+}
+
+.table_tools .table_tools_segmented_control .index .selected .table_tools_button, .table_tools .table_tools_segmented_control .index .table_tools_button {
+  border: 1px solid;
+  padding: 10px;
+  background-color: #006dee;
+  text-decoration: none;
+  float: left;
+  border-radius: 5px;
+  color: white;
 }
