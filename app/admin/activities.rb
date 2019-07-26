@@ -12,7 +12,7 @@ ActiveAdmin.register Activity do
         url: "#{admin_activity_path(item)}",
         tooltip: {
             title: "#{ I18n.l(item.date_activity)}",
-            text: item.description.blank? ? nil : item.description.truncate(30).html_safe
+            text: item.description.blank? ? nil : item.description.truncate(25).html_safe
         },
         color: 'green',
         textColor: 'white'
