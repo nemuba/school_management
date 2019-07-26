@@ -5,6 +5,9 @@
     "@rails/webpacker": "^4.0.7",
     "fullcalendar": "3.9.0"
   },
+  "scripts": {
+    "start": ""
+  },
   "devDependencies": {
     "webpack-dev-server": "^3.7.2"
   }
