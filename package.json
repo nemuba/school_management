@@ -2,6 +2,7 @@
   "name": "school_management",
   "private": true,
   "dependencies": {
+    "bulma-fluent": "^0.3.17",
     "fullcalendar": "3.9.0"
   }
 }

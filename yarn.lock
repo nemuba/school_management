@@ -2,6 +2,18 @@
 # yarn lockfile v1
 
 
+bulma-fluent@^0.3.17:
+  version "0.3.17"
+  resolved "https://registry.yarnpkg.com/bulma-fluent/-/bulma-fluent-0.3.17.tgz#e770bc78721cad4ec36fb040bb3269301e96c101"
+  integrity sha512-RvHh3MnkNaG39C4F2Qem3+aDgSFR5+VSQCEPn8ZERQFJair0fAhOtFsq1Di66onxXHmimyzQ92hJVVDV1EEVVA==
+  dependencies:
+    bulma "^0.7.4"
+
+bulma@^0.7.4:
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.7.5.tgz#35066c37f82c088b68f94450be758fc00a967208"
+  integrity sha512-cX98TIn0I6sKba/DhW0FBjtaDpxTelU166pf7ICXpCCuplHWyu6C9LYZmL5PEsnePIeJaiorsTEzzNk3Tsm1hw==
+
 fullcalendar@3.9.0:
   version "3.9.0"
   resolved "https://registry.yarnpkg.com/fullcalendar/-/fullcalendar-3.9.0.tgz#b608a9989f3416f0b1d526c6bdfeeaf2ac79eda5"

@@ -1,16 +1,12 @@
-<div id="wrapper">
-  <div id="active_admin_content">
-    <div id="main_content_wrapper">
-      <div id="main_content">
-        <div class="panel">
-          <h3>Bem vindo ao sistema escolar </h3>
-          <ul>
-            <li><%= link_to "Login ao painel de controle", new_user_session_path %></li>
-            <li><%= link_to "Sobre sistema", "#" %></li>
-          </ul>
-        </div>
-      </div>
+<section class="hero is-link is-fullheight-with-navbar">
+  <div class="hero-body">
+    <div class="container">
+      <p class="title is-2">Bem vindo ao Sistema Escolar !</p>
+      <p class="subtitle is-3">Sistema de gerenciamento escolar.</p>
+      <p class="subtitle is-5">Facilitando seu trabalho.</p>
+      <a href="<%= new_user_session_path %>" class="button is-light is-outlined">Acessar</a>
     </div>
   </div>
-</div>
+</section>
+
 
