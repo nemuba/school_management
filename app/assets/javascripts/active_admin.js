@@ -8,7 +8,8 @@
 //= require fullcalendar/dist/locale/pt-br
 
 document.addEventListener('DOMContentLoaded', () => {
-    const $c = document.getElementById("calendar").children;
-    $c[0].innerHTML = "Calendário";
-
+    if (document.getElementById("calendar") != null ) {
+        const $c = document.getElementById("calendar").children;
+        $c[0].innerHTML = "Calendário Escolar";
+    }
 });
