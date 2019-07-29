@@ -16,6 +16,6 @@ First configure your .env file with variables for connecting to the local and pr
 Create a file an .env file at the root of the project. Then run the `rails db: create db: migrate` database create command to create and migrate the system database tables. To start with a standard user run the command `rails db: seed`, and you're done!
 Now run the `rails server` or `rails s` server.
 
-* Database creation: rails db:create db:migrate
+* Database creation: `rails db:create db:migrate`
 
-* Database initialization: rails db:seed
+* Database initialization: `rails db:seed`

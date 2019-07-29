@@ -1,4 +1,5 @@
 ActiveAdmin.register Registration do
+  includes :student, :school_class
   menu label: proc {(current_user.admin?) ? Registration.model_name.human(count: 2).titleize : i18n.t('menu.registration') }, priority: 5
   permit_params :student_id, :school_class_id, :status, :date_registration
 
