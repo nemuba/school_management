@@ -115,7 +115,7 @@ ActiveAdmin.register Student do
     redirect_to admin_students_path, alert: "Presença registrada com sucesso !"
   end
 
-  # Ações em lote: Registrando falta para um ou uma seleção de alunos
+  # Ações em lote: Registrando falta para um ou uma seleção de aluno
   batch_action :register_lack, :confirm => "Registrar falta - Você tem certeza?" do |selection|
     #Student.find(selection).each {|s| s.presences.create! kind: :present, student_id: s.id}
     Student.find(selection).each do |s|
