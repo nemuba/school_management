@@ -15,7 +15,9 @@ ActiveAdmin.register Activity do
             text: item.description.blank? ? nil : item.description.truncate(25).html_safe
         },
         color: 'green',
-        textColor: 'white'
+        textColor: 'white',
+        plugins: ['list'],
+        defaultView: 'listWeek'
     }
   end
 

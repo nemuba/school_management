@@ -68,8 +68,6 @@
     dropdown_actions:
       button_label: "Ações"
     batch_actions:
-      register_present: "Registrar Presença"
-      register_lack: "Registrar Falta"
       button_label: "Ações em lote"
       default_confirmation: "Tem certeza que quer fazer isso?"
       delete_confirmation: "Tem certeza que deseja excluir estes %{plural_model}?"
@@ -80,6 +78,8 @@
       action_label: "%{title} Selecionado"
       labels:
         destroy: "Excluir"
+        register_present: "Registrar Presença"
+        register_lack: "Registrar Falta"
     comments:
       created_at: "Criado em"
       resource_type: "Tipo de Objeto"

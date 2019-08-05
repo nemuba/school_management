@@ -7,6 +7,8 @@
 //= require index_as_calendar/jquery.qtip.min
 //= require fullcalendar/dist/locale/pt-br
 
+
+
 document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById("calendar") != null ) {
         const $c = document.getElementById("calendar").children;

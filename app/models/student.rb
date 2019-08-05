@@ -1,4 +1,5 @@
 class Student < ApplicationRecord
+  enum skin_color: [:branco, :preto, :pardo]
   has_many :addresses, as: :addressable, dependent: :destroy
   has_many :responsible_legals
 

@@ -2,7 +2,7 @@ ActiveAdmin.register Student do
   includes :addresses, :responsible_legals, :presences
   menu label: proc {(current_user.teacher?) ? I18n.t('menu.student.teacher') : Student.model_name.human(count: 2).titleize}, priority: 3
 
-  permit_params :name, :ra, :rm, :birthdate, :number_registration, :mother, :father, :phone,
+  permit_params :name, :ra, :rm, :birthdate, :number_registration, :mother, :father, :phone, :family_bag, :birth_certificate_number, :skin_color,
                 :addresses_attributes => [:id, :street, :number, :neighboard, :city, :state, :zip_code, :_destroy],
                 :responsible_legals_attributes => [:id, :name, :phone, :_destroy]
   form do |f|
@@ -13,9 +13,12 @@ ActiveAdmin.register Student do
           f.input :number_registration
           f.input :ra
           f.input :rm
-          f.input :birthdate,as: :date_picker, input_html: {style: "float: left; width: 30%;"}
+          f.input :birthdate, as: :date_picker, input_html: {style: "float: left; width: 30%;"}
+          f.input :birth_certificate_number
           f.input :mother
           f.input :father
+          f.input :skin_color
+          f.input :family_bag
           f.input :phone, mask: "+55-##-#####-####"
         end
       end # tab student details
@@ -59,10 +62,15 @@ ActiveAdmin.register Student do
     attributes_table do
       row :name
       row :birthdate
+      row :skin_color do |student|
+        student.skin_color.titleize
+      end
       row :mother
       row :father
+      row :family_bag
       row :phone
       row :number_registration
+      row :birth_certificate_number
       row :ra
       row :rm
       row :responsible_legals do |student|
@@ -89,7 +97,7 @@ ActiveAdmin.register Student do
   filter :responsible_legals
 
   # Ações em lote: Registrando presença para um ou uma seleção de alunos
-  batch_action :register_present do |selection|
+  batch_action :register_present, :confirm => "Registrar presença - Você tem certeza?" do |selection|
     #Student.find(selection).each {|s| s.presences.create! kind: :present, student_id: s.id}
     Student.find(selection).each do |s|
       if s.presences.any?
@@ -104,11 +112,11 @@ ActiveAdmin.register Student do
         s.presences.create! status: :present, student_id: s.id, user_id: current_user.id, school_class_id: s.school_classes.last.id, date_presence: Time.now
       end
     end
-    redirect_to admin_students_path, alert: "Presence registered successfully!"
+    redirect_to admin_students_path, alert: "Presença registrada com sucesso !"
   end
 
   # Ações em lote: Registrando falta para um ou uma seleção de alunos
-  batch_action :register_lack do |selection|
+  batch_action :register_lack, :confirm => "Registrar falta - Você tem certeza?" do |selection|
     #Student.find(selection).each {|s| s.presences.create! kind: :present, student_id: s.id}
     Student.find(selection).each do |s|
       if s.presences.any?
@@ -123,7 +131,7 @@ ActiveAdmin.register Student do
         s.presences.create! status: :lack, student_id: s.id, user_id: current_user.id, school_class_id: s.school_classes.last.id, date_presence: Time.now
       end
     end
-    redirect_to admin_students_path, alert: "Presence registered successfully!"
+    redirect_to admin_students_path, alert: "Falta registrada com sucesso !"
   end
 
   controller do

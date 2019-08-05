@@ -126,11 +126,14 @@
         ra: RA
         rm: RM
         birthdate: Data de Aniversário
+        birth_certificate_number: Nº Certidão de Nascimento
         presences: Presenças
         lack: Faltas
         number_registration: Nº de registro
         mother: Mãe
         father: Pai
+        family_bag: Possui Bolsa Familia?
+        skin_color: Cor(pele)
         phone: Telefone
         responsible_legals: Responsáveis
         addresses: Endereços
@@ -145,6 +148,9 @@
       presence:
         id: Id
         status: Status
+        statuses:
+          present: Presente
+          lack: Faltou
         user: Professor(a)
         student: Aluno
         school_class: Turma
